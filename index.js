@@ -40,6 +40,23 @@ io.on('connection', (socket) => {
     db.addChat(newChat)
   })
 
+  socket.on('checkUser', (name) => {
+    db.checkUser(name)
+  })
+
+  socket.on('queryGetUser', (user) => {
+    db.getUser(user).then((resolve) => {
+      socket.emit(
+        'getUser',
+        resolve ? {id: resolve._id, name: resolve.name} : resolve
+      )
+    })
+  })
+
+  socket.on('createUser', (user) => {
+    db.createUser(user)
+  })
+
   socket.on('disconnect', function () {
     console.log('A user disconnected')
   })
@@ -48,21 +65,3 @@ io.on('connection', (socket) => {
 http.listen(5000, () => {
   console.log('listening on http://localhost:5000')
 })
-
-const messages = [
-  {
-    id: 123,
-    user: 'Иван',
-    text: 'Как дела?',
-    date: '12.04'
-  },
-
-  {
-    id: 125,
-    user: 'Петр',
-    text: 'Нормально, сам?',
-    date: '12.32'
-  }
-]
-
-//db.getMessagesInRoom(room, messages)

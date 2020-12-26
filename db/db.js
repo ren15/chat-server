@@ -9,6 +9,7 @@ const userSchema = schemas.userSchema
 mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const Chat = mongoose.model('Chat', chatSchema)
+const User = mongoose.model('User', userSchema)
 
 const getChatList = async () => {
   try {
@@ -18,13 +19,14 @@ const getChatList = async () => {
   }
 }
 
-const addChat = (param) => {
+const addChat = async (param) => {
   const chat = new Chat(param)
-  chat.save(function (err) {
-    //mongoose.disconnect() // отключение от базы данных
-    if (err) return console.log(err)
-    console.log('Сохранен объект', chat)
-  })
+
+  try {
+    return await chat.save().exec()
+  } catch (err) {
+    err.stack
+  }
 }
 
 const getMessagesInChat = async (id) => {
@@ -45,7 +47,35 @@ const sendMessagesInChat = async (id, newMessage) => {
   }
 }
 
+const getUser = async ({name, password}) => {
+  try {
+    return await User.findOne({name, password}).exec()
+  } catch (err) {
+    err.stack
+  }
+}
+
+const checkUser = async (name) => {
+  try {
+    return await User.find({name}).exec()
+  } catch (err) {
+    err.stack
+  }
+}
+
+const createUser = async ({name, password}) => {
+  const user = new User({name, password})
+  try {
+    return await user.save().exec()
+  } catch (err) {
+    err.stack
+  }
+}
+
 module.exports.addChat = addChat
 module.exports.getMessagesInChat = getMessagesInChat
 module.exports.sendMessagesInChat = sendMessagesInChat
 module.exports.getChatList = getChatList
+module.exports.createUser = createUser
+module.exports.checkUser = checkUser
+module.exports.getUser = getUser

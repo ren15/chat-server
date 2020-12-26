@@ -23,8 +23,7 @@ const chatSchema = new Schema({
 // Схема пользователя
 const userSchema = new Schema({
   name: String,
-  password: String,
-  chats: [{chat: String}]
+  password: String
 })
 
 module.exports.chatSchema = chatSchema
