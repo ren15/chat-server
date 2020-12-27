@@ -12,15 +12,32 @@ const db = require('./db/db')
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
-const now = new Date()
 
 io.on('connection', (socket) => {
   console.log('Connected SockedId: ', socket.id)
   // Получение списка чатов и передача на Frontend
 
+  socket.on('queryGetUser', (user) => {
+    db.getUser(user).then((resolve) => {
+      socket.emit(
+        'getUser',
+        resolve ? {id: resolve._id, name: resolve.name} : resolve
+      )
+    })
+  })
+
+  socket.on('queryGetUserById', (id) => {
+    db.getUserById(id).then((resolve) => {
+      socket.emit(
+        'getUser',
+        resolve ? {id: resolve._id, name: resolve.name} : resolve
+      )
+    })
+  })
+
   socket.on('queryGetChatList', () => {
     db.getChatList().then((resolve) => {
-      socket.emit('getChatList', resolve)
+      io.emit('getChatList', resolve)
     })
   })
 
@@ -42,15 +59,6 @@ io.on('connection', (socket) => {
 
   socket.on('checkUser', (name) => {
     db.checkUser(name)
-  })
-
-  socket.on('queryGetUser', (user) => {
-    db.getUser(user).then((resolve) => {
-      socket.emit(
-        'getUser',
-        resolve ? {id: resolve._id, name: resolve.name} : resolve
-      )
-    })
   })
 
   socket.on('createUser', (user) => {

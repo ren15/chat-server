@@ -59,6 +59,14 @@ const getUser = async ({name, password}) => {
   }
 }
 
+const getUserById = async (id) => {
+  try {
+    return await User.findById(id).exec()
+  } catch (err) {
+    err.stack
+  }
+}
+
 const checkUser = async (name) => {
   try {
     return await User.find({name}).exec()
@@ -83,3 +91,4 @@ module.exports.getChatList = getChatList
 module.exports.createUser = createUser
 module.exports.checkUser = checkUser
 module.exports.getUser = getUser
+module.exports.getUserById = getUserById
