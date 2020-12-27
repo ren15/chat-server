@@ -6,7 +6,11 @@ const chatSchema = schemas.chatSchema
 const userSchema = schemas.userSchema
 // подключение
 
-mongoose.connect(config.uri, {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(config.uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+})
 
 const Chat = mongoose.model('Chat', chatSchema)
 const User = mongoose.model('User', userSchema)

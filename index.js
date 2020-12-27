@@ -26,13 +26,13 @@ io.on('connection', (socket) => {
 
   socket.on('queryGetMessagesInChat', (id) => {
     db.getMessagesInChat(id).then((resolve) => {
-      socket.emit('getMessagesInChat', resolve)
+      io.emit('getMessagesInChat', resolve)
     })
   })
 
   socket.on('querySendMessagesInChat', (id, newMessage) => {
     db.sendMessagesInChat(id, newMessage).then((resolve) => {
-      socket.emit('sendMessagesInChat', resolve)
+      io.emit('sendMessagesInChat', resolve)
     })
   })
 
