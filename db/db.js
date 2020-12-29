@@ -4,8 +4,8 @@ const config = require('./config')
 
 const chatSchema = schemas.chatSchema
 const userSchema = schemas.userSchema
-// подключение
 
+// подключение
 mongoose.connect(config.uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -25,7 +25,6 @@ const getChatList = async () => {
 
 const addChat = async (param) => {
   const chat = new Chat(param)
-
   try {
     return await chat.save().exec()
   } catch (err) {
@@ -46,6 +45,14 @@ const sendMessagesInChat = async (id, newMessage) => {
     return await Chat.findByIdAndUpdate(id, {
       $push: {messages: [newMessage]}
     }).exec()
+  } catch (err) {
+    err.stack
+  }
+}
+
+const deleteChat = async (idChat, userId) => {
+  try {
+    return await Chat.findByIdAndDelete(idChat).exec()
   } catch (err) {
     err.stack
   }
@@ -92,3 +99,4 @@ module.exports.createUser = createUser
 module.exports.checkUser = checkUser
 module.exports.getUser = getUser
 module.exports.getUserById = getUserById
+module.exports.deleteChat = deleteChat

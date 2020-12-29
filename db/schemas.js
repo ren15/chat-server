@@ -4,12 +4,6 @@ const {Schema} = require('mongoose')
 const chatSchema = new Schema({
   name: String,
   creator: String,
-  lastMessage: String,
-  users: [
-    {
-      id: String
-    }
-  ],
   messages: [
     {
       text: String,
