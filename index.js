@@ -17,7 +17,6 @@ io.on('connection', (socket) => {
 
   // Получение списка чатов и передача на Frontend
   socket.on('queryGetUser', (user) => {
-    console.log('queryGetUser')
     db.getUser(user).then((resolve) => {
       socket.emit(
         'getUser',
@@ -28,55 +27,55 @@ io.on('connection', (socket) => {
 
   // Получение списка чатов и передача на Frontend
   socket.on('queryGetChatList', () => {
-    console.log('queryGetChatList')
-
     db.getChatList().then((resolve) => {
-      io.emit('getChatList', resolve)
+      setTimeout(() => {
+        console.log('queryGetChatList, getChatList')
+        io.emit('getChatList', resolve)
+      }, 1000)
     })
   })
 
   // Получение сообщений чата по id и передача на Frontend
   socket.on('queryGetMessagesInChat', (id) => {
-    console.log('queryGetMessagesInChat')
-
     db.getMessagesInChat(id).then((resolve) => {
-      io.emit('getMessagesInChat', resolve)
+      setTimeout(() => {
+        io.emit('getMessagesInChat', resolve)
+      }, 1000)
     })
   })
 
   socket.on('queryDeleteChat', async (id, userId) => {
-    console.log('queryDeleteChat')
-
     await db.deleteChat(id, userId)
+    db.getChatList().then((resolve) => {
+      setTimeout(() => {
+        console.log('queryDeleteChat, getChatList')
+
+        io.emit('getChatList', resolve)
+      }, 1000)
+    })
   })
 
   // Получение сообщений чата по id и передача на Frontend
   socket.on('querySendMessagesInChat', (id, newMessage) => {
-    console.log('querySendMessagesInChat')
-
     db.sendMessagesInChat(id, newMessage).then((resolve) => {
-      io.emit('getMessagesInChat', resolve)
+      setTimeout(() => {
+        io.emit('getMessagesInChat', resolve)
+      }, 1000)
     })
   })
 
   // Создание нового чата
   socket.on('createChat', (newChat) => {
-    console.log('createChat')
-
     db.addChat(newChat)
   })
 
   // Проверка пользователя на наличие в базе данных
   socket.on('checkUser', (name) => {
-    console.log('checkUser')
-
     db.checkUser(name)
   })
 
   // Получение id и name пользователя и передача на Frontend
   socket.on('queryGetUserById', (id) => {
-    console.log('queryGetUserById')
-
     db.getUserById(id).then((resolve) => {
       socket.emit(
         'getUser',
@@ -87,8 +86,6 @@ io.on('connection', (socket) => {
 
   // Регистрация пользователя
   socket.on('createUser', (user) => {
-    console.log('createUser')
-
     db.createUser(user)
   })
 
