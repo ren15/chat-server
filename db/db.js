@@ -74,14 +74,6 @@ const getUserById = async (id) => {
   }
 }
 
-const checkUser = async (name) => {
-  try {
-    return await User.find({name}).exec()
-  } catch (err) {
-    err.stack
-  }
-}
-
 const createUser = async ({name, password}) => {
   const user = new User({name, password})
   try {
@@ -96,7 +88,6 @@ module.exports.getMessagesInChat = getMessagesInChat
 module.exports.sendMessagesInChat = sendMessagesInChat
 module.exports.getChatList = getChatList
 module.exports.createUser = createUser
-module.exports.checkUser = checkUser
 module.exports.getUser = getUser
 module.exports.getUserById = getUserById
 module.exports.deleteChat = deleteChat
