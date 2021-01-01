@@ -3,8 +3,8 @@ const http = require('http').createServer(app)
 const cors = require('cors')
 const io = require('socket.io')(http, {
   cors: {
-    origin: 'https://stoic-wiles-9cc80d.netlify.app/',
-    methods: ['GET', 'POST', 'OPTIONS']
+    origin: '*',
+    methods: ['GET', 'POST']
   }
 })
 const db = require('./db/db')
