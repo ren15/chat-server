@@ -1,6 +1,5 @@
 const app = require('express')()
 const http = require('http').createServer(app)
-const cors = require('cors')
 const io = require('socket.io')(http, {
   cors: {
     origin: '*',
@@ -8,13 +7,8 @@ const io = require('socket.io')(http, {
   }
 })
 const db = require('./db/db')
-app.use(cors())
 
 app.get('/', (req, res) => {
-  res.header(
-    'Access-Control-Allow-Origin',
-    'https://stoic-wiles-9cc80d.netlify.app/'
-  )
   res.sendFile(__dirname + '/index.html')
 })
 
