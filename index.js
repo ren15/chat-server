@@ -1,5 +1,5 @@
 const app = require('express')()
-const http = require('http').createServer(app)
+const http = require('https').createServer(app)
 const io = require('socket.io')(http, {
   cors: {
     origin: 'https://stoic-wiles-9cc80d.netlify.app/',
