@@ -1,6 +1,5 @@
 const app = require('express')()
 const http = require('http').createServer(app)
-const cors = require('cors')
 const io = require('socket.io')(http, {
   cors: {
     origin: 'https://stoic-wiles-9cc80d.netlify.app/',
@@ -10,6 +9,10 @@ const io = require('socket.io')(http, {
   }
 })
 const db = require('./db/db')
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html')
+})
 
 io.on('connection', (socket) => {
   console.log('Connected SockedId: ', socket.id)
