@@ -11,6 +11,10 @@ const db = require('./db/db')
 app.use(cors())
 
 app.get('/', (req, res) => {
+  res.header(
+    'Access-Control-Allow-Origin',
+    'https://stoic-wiles-9cc80d.netlify.app/'
+  )
   res.sendFile(__dirname + '/index.html')
 })
 
