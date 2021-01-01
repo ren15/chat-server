@@ -1,13 +1,9 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const cors = require('cors')
-const io = require('socket.io')(http, {
-  cors: {
-    origin: 'https://stoic-wiles-9cc80d.netlify.app/',
-    methods: ['GET', 'POST']
-  }
-})
+const io = require('socket.io')
 const db = require('./db/db')
+
 app.use(cors())
 
 app.get('/', (req, res) => {
