@@ -4,7 +4,9 @@ const cors = require('cors')
 const io = require('socket.io')(http, {
   cors: {
     origin: 'https://stoic-wiles-9cc80d.netlify.app/',
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Access-Control-Allow-Origin'],
+    credentials: true
   }
 })
 const db = require('./db/db')
