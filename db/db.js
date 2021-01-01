@@ -1,12 +1,16 @@
 const mongoose = require('mongoose')
 const schemas = require('./schemas')
-const config = require('./config')
+require('dotenv').config()
 
 const chatSchema = schemas.chatSchema
 const userSchema = schemas.userSchema
 
+console.log(process.env.DB_USER)
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.ct7vt.mongodb.net/chat-db?retryWrites=true&w=majority`
+
 // подключение
-mongoose.connect(config.uri, {
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
